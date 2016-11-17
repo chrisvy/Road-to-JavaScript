@@ -12,7 +12,7 @@ window.onload = function () {
   if (score < 400 || score > 900) {
     alert('信用分数区间：400~900');
   } else {
-    var dot = new Dot(),
+    var dot = new Dot(),//动点
         dotSpeed = 0.03,
         textSpeed = Math.round(dotSpeed * 100 / deg1),
         angle = 0,
@@ -20,20 +20,24 @@ window.onload = function () {
 
     (function drawFrame() {
 
+      //移动画布原点，旋转画布
       ctx.save();
       ctx.clearRect(0, 0, cWidth, cHeight);
       ctx.translate(cWidth / 2, cHeight / 2);
       ctx.rotate(8 * deg0);
 
+      //动点的圆心位置
       dot.x = radius * Math.cos(angle);
       dot.y = radius * Math.sin(angle);
 
+      //动点的角度大小
       var aim = (score - 400) * deg1 / 100;
       if (angle < aim) {
         angle += dotSpeed;
       }
       dot.draw(ctx);
 
+      //信用值
       if (credit < score - textSpeed) {
         credit += textSpeed;
       } else if (credit >= score - textSpeed && credit < score) {
@@ -41,6 +45,7 @@ window.onload = function () {
       }
       text(credit);
 
+      //动点走过的痕迹
       ctx.save();
       ctx.beginPath();
       ctx.lineWidth = 3;
@@ -96,7 +101,7 @@ window.onload = function () {
       }
       ctx.restore();
 
-      ctx.save(); //分数段
+      ctx.save(); //信用等级
       ctx.rotate(Math.PI / 2 + deg0);
       for (i = 0; i < 5; i++) {
         ctx.fillStyle = 'rgba(255, 255, 255, .4)';
