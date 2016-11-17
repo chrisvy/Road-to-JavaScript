@@ -18,13 +18,15 @@ window.onload = function () {
         angle = 0,
         credit = 400;
 
+        //注意：save和restore相当于一个局部作用域，在该作用域内的旋转等操作，在作用域外失效。
+
     (function drawFrame() {
 
-      //移动画布原点，旋转画布
+      //移动画布的原点，旋转画布
       ctx.save();
       ctx.clearRect(0, 0, cWidth, cHeight);
       ctx.translate(cWidth / 2, cHeight / 2);
-      ctx.rotate(8 * deg0);
+      ctx.rotate(8 * deg0);//旋转了160度
 
       //动点的圆心位置
       dot.x = radius * Math.cos(angle);
@@ -43,14 +45,14 @@ window.onload = function () {
       } else if (credit >= score - textSpeed && credit < score) {
         credit += 1;
       }
-      text(credit);
+      text(credit);//函数内旋转了200度
 
       //动点走过的痕迹
       ctx.save();
       ctx.beginPath();
       ctx.lineWidth = 3;
       ctx.strokeStyle = 'rgba(255, 255, 255, .5)';
-      ctx.arc(0, 0, radius, 0, angle, false);
+      ctx.arc(0, 0, radius, 0, angle, false);//注意，旋转后x轴也跟着旋转，所以其实角度还是0
       ctx.stroke();
       ctx.restore();
 
@@ -72,7 +74,7 @@ window.onload = function () {
         ctx.moveTo(140, 0);
         ctx.lineTo(130, 0);
         ctx.stroke();
-        ctx.rotate(deg1);
+        ctx.rotate(deg1);//旋转
       }
       ctx.restore();
 
@@ -86,7 +88,7 @@ window.onload = function () {
           ctx.lineTo(133, 0);
           ctx.stroke();
         }
-        ctx.rotate(deg1 / 5);
+        ctx.rotate(deg1 / 5);//旋转
       }
       ctx.restore();
 
